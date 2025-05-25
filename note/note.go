@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-const FILES_DIR string = "files"
+const FILES_DIR string = "files-note"
 
 type Note struct {
 	Title     string    `json:"title"`
@@ -24,7 +24,7 @@ func (note Note) ShowNote() {
 func (note Note) Save() error {
 	fileName := strings.ReplaceAll(note.Title, " ", "_")
 	fileName = strings.ToLower(fileName)
-	fileName = fmt.Sprintf("files/%v.json", fileName)
+	fileName = fmt.Sprintf("%v/%v.json", FILES_DIR, fileName)
 
 	json, err := json.Marshal(note)
 	if err != nil {

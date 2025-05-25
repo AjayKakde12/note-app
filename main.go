@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"note-app.com/root/note"
+	"note-app.com/root/todo"
 )
 
 func getUserInput(prompt string) string {
@@ -24,6 +25,10 @@ func getUserInput(prompt string) string {
 	return text
 }
 
+func getTodoData() string {
+	return getUserInput("Todo text: ")
+}
+
 func getNoteData() (string, string) {
 	title := getUserInput("Note title: ")
 
@@ -33,6 +38,7 @@ func getNoteData() (string, string) {
 }
 
 func main() {
+	// Notes handeling
 	title, content := getNoteData()
 
 	userNote, err := note.New(title, content)
@@ -42,6 +48,7 @@ func main() {
 	}
 
 	userNote.ShowNote()
+
 	err = userNote.Save()
 	if err != nil {
 		fmt.Println("Saving the note failed.", err)
@@ -50,4 +57,21 @@ func main() {
 
 	fmt.Println("Saving the note succeeded")
 
+	// Todo Handeling
+	content = getTodoData()
+
+	userTodo, err := todo.New(content)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	userTodo.ShowTodo()
+
+	err = userTodo.Save()
+	if err != nil {
+		fmt.Println("Saving the todo failed.", err)
+		return
+	}
+
+	fmt.Println("Saving the todo succeeded")
 }
